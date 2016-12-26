@@ -107,12 +107,9 @@
 <p>我的wamp服务器www目录：</p>
 <p><img src="http://i.imgur.com/q7K3c0r.png" alt=""></p>
 <p>health.json就是非JVM应用程序提供模仿SpringBoot健康检查接口的可访问的uri. 它应该返回一个json文档类似如下:</p>
-<pre><code>`{&quot;status&quot;:&quot;UP&quot;}`
-</code></pre><p>by the way，我把服务器的端口改成了3000，默认的是80</p>
-<p><a href="http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html" target="_blank" rel="external">如何修改wamp默认80端口</a></p>
-<p>###python准备（python大神请随意）</p>
-<p>这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</p>
-<pre><code>import httplib
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">by the way，我把服务器的端口改成了3000，默认的是80</div><div class="line"></div><div class="line">[如何修改wamp默认80端口](http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html)</div><div class="line"></div><div class="line"></div><div class="line">###python准备（python大神请随意）</div><div class="line"></div><div class="line">这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</div></pre></td></tr></table></figure>
+
+import httplib
 
 from twisted.web import server, resource
 from twisted.internet import reactor, endpoints
@@ -141,8 +138,7 @@ root.putChild(&apos;health&apos;, Health())
 root.putChild(&apos;&apos;, Fortune())
 endpoints.serverFromString(reactor, &quot;tcp:5680&quot;).listen(server.Site(root))
 reactor.run()
-</code></pre><p>###Eureka</p>
-<p>创建一个springboot程序，修改pom文件如下：</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">###Eureka</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div></pre></td></tr></table></figure>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
  &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
@@ -220,16 +216,11 @@ reactor.run()
     &lt;/plugins&gt;
 &lt;/build&gt;
  &lt;/project&gt;
-</code></pre><p>修改application.properties配置文件</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">修改application.properties配置文件</div></pre></td></tr></table></figure>
 <pre><code>server.port=8761
 eureka.client.fetch-registry=false
 eureka.client.register-with-eureka=false
-</code></pre><p>最后，我们在EurekaApplication中添加注解<code>@EnableEurekaServer</code>，开启服务的注册中心</p>
-<p><img src="http://i.imgur.com/h3H7XIB.png" alt=""></p>
-<p>项目目录结构如下：</p>
-<p><img src="http://i.imgur.com/tWIMLjS.png" alt=""></p>
-<p>###Configserver</p>
-<p>创建一个springboot程序，修改pom文件如下：</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后，我们在EurekaApplication中添加注解`@EnableEurekaServer`，开启服务的注册中心</div><div class="line"></div><div class="line">![](http://i.imgur.com/h3H7XIB.png)</div><div class="line"></div><div class="line"></div><div class="line">项目目录结构如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/tWIMLjS.png)</div><div class="line"></div><div class="line">###Configserver</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div></pre></td></tr></table></figure>
 <pre><code> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
@@ -317,18 +308,14 @@ eureka.client.register-with-eureka=false
     &lt;/plugins&gt;
 &lt;/build&gt;
  &lt;/project&gt;
-</code></pre><p>修改application.properties配置文件:</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">修改application.properties配置文件:</div></pre></td></tr></table></figure>
 <pre><code>server.port=8888
 spring.cloud.config.server.git.uri=https://github.com/spencergibb/oscon-config-repo
-</code></pre><p>这里还有一个配置文件bootstrap.properties：</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这里还有一个配置文件bootstrap.properties：</div></pre></td></tr></table></figure>
 <pre><code>server.port=5678
 sidecar.port=3000
 sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
-</code></pre><p>项目目录如下：</p>
-<p><img src="http://i.imgur.com/Hblz6iN.png" alt=""></p>
-<p>###sidecar for php</p>
-<p>开始编写一个为php应用对接的sidecar程序</p>
-<p>同样，这是一个springboot程序，我们先改写pom.xml文件</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">项目目录如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/Hblz6iN.png)</div><div class="line"></div><div class="line">###sidecar for php</div><div class="line"></div><div class="line">开始编写一个为php应用对接的sidecar程序</div><div class="line"></div><div class="line">同样，这是一个springboot程序，我们先改写pom.xml文件</div></pre></td></tr></table></figure>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
@@ -414,13 +401,11 @@ sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
     &lt;/plugins&gt;
 &lt;/build&gt;
 &lt;/project&gt;
-</code></pre><p>然后在程序中开启@EnableSidecar</p>
-<p><img src="http://i.imgur.com/ovJJGFH.png" alt=""></p>
-<p>最后，关键性的一步，我们改写application.properties文件</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">然后在程序中开启@EnableSidecar</div><div class="line"></div><div class="line">![](http://i.imgur.com/ovJJGFH.png)</div><div class="line"></div><div class="line">最后，关键性的一步，我们改写application.properties文件</div></pre></td></tr></table></figure>
 <pre><code>server.port=5678    
 sidecar.port=3000
 sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
-</code></pre><p> <code>server.port=5678</code> 指定了这个sidecar运行时所占用的端口</p>
+</code></pre><p><code>`` </code>server.port=5678` 指定了这个sidecar运行时所占用的端口</p>
 <p> <code>sidecar.port=3000</code> 指定了sidecar监听非jvm应用程序的端口，就是我们的php程序所挂载的服务器，之前我已经把服务器端口改成3000了</p>
 <p> <code>sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json</code>指定了php程序返回给sidecar的健康指标状态，我这里是通过文件的返回，当然你也可以通过RESTAPI，如果程序没有正常挂起，sidecar自然不能进行健康监测访问health.json（或者health方法），拿不到<code>up</code>，所以在注册中心则会显示一个<code>douwn</code>的状态，表示程序没有正常挂起，这就是sidecar的思想。</p>
 <p>项目结构：</p>
@@ -448,7 +433,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://KeoZmy.github.io/2016/12/26/SpringCloud整合php、python示例/" data-id="cix5skkwx00003su5gfr4i8jn" class="article-share-link">Share</a>
+      <a data-url="http://KeoZmy.github.io/2016/12/26/SpringCloud整合php、python示例/" data-id="cix5spoxt0000o4u5m2d4bema" class="article-share-link">Share</a>
       
       
     </footer>
@@ -493,7 +478,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://KeoZmy.github.io/2016/12/26/hello-world/" data-id="cix5skkx200013su5z4iu5kk1" class="article-share-link">Share</a>
+      <a data-url="http://KeoZmy.github.io/2016/12/26/hello-world/" data-id="cix5spoxy0001o4u5ocu5gcee" class="article-share-link">Share</a>
       
       
     </footer>
