@@ -72,6 +72,120 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-谈谈NoSQL——非关系型数据库概览" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/28/谈谈NoSQL——非关系型数据库概览/" class="article-date">
+  <time datetime="2016-12-28T06:55:37.468Z" itemprop="datePublished">2016-12-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/28/谈谈NoSQL——非关系型数据库概览/">谈谈NoSQL——非关系型数据库概览</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#NoSql</p>
+<p>##前言<br>随着大数据时代的崛起，应用程序需要处理的数据的复杂性大大增加，数据的复杂性不仅包括它的大小，还包括它的相互关联性，结构的千变万化以及对数据的同时访问。<br>假设，我们要查询一组数据，但是join了4、5次，进行一次搜索深度为4的查询，这将会为关系型数据引擎带来巨大的压力，当数据量过大时，每增加一个深度，无意再先前的基数上再做笛卡尔积，如果有1000条数据，我要通过关系型数据库进行深度为5的查询，那将会产生1000的5次方个记录，然而这仅仅是1000条数据，真正的大数据环境下，至少都是上百万条的数据，显然，关系型数据库在这种复杂的对象映射关系中并不适合，所以NoSql的概念也已应运而生。</p>
+<p>尽管NoSQL的名字已经被人们所接受，但这个并没有准确反映出其代表的意义，反而给人们以错误的映像，认为它只是对SQL而言的一个概念。相对而言，叫做”非关系型数据库”会更合适一些，因为 关系型/非关系范式才是我们关注的point，而SQL只是关系型技术使用的一种语言。</p>
+<p>非关系型数据库主要有四类：</p>
+<ul>
+<li>主键值存储</li>
+<li>列族存储</li>
+<li>面向文档的数据库</li>
+<li>图形数据库</li>
+</ul>
+<h2 id="主键值存储"><a href="#主键值存储" class="headerlink" title="主键值存储"></a>主键值存储</h2><p>主键值存储代表了最简单，但却非常强大的处理大量并发访问数据的方法。缓存是一种典型的主键值技术。主键值存储允许使用非常简单的结构存储数据，这些数据常常在内存中，甚至在高并发环境下的高速访问。</p>
+<p>这些数据存储在一个巨大的哈希表中，由主键进行访问。数据取主键值对的形式，对其操作大都局限于使用简单的put(write)和get(read)操作。其值仅支持简单的数据结构如文本或二进制内容，虽然一些较新的主键值存储支持一组有限的复杂数据类型（如：Redis支持列表和映射作为值）。</p>
+<p>主键值存储是最简单的NOSQL技术。所有其他的NOSQL类别都建立在简单性、高性能和可扩展性的主键值存储技术上，以更好的适合一些特定的使用场所。</p>
+<p>###小结<br>主键值存储：</p>
+<p> 典型应用案例</p>
+<ul>
+<li>缓存</li>
+<li>快速读取访问简单域</li>
+<li><p>大规模并发系统</p>
+<p>最著名的技术</p>
+</li>
+<li><p>Redis</p>
+</li>
+<li>Memcached</li>
+<li>Tokyo Cabinet</li>
+</ul>
+<p>##列族存储</p>
+<p>分布式主键值模型缩放的很好，但是在这模型中，必须使用某些类型的数据结构。这就是列族存储类如何进入到NOSQL领域中的。</p>
+<p>列族存储是将类似的值（或列）作为一组一起存储在同一列族中（例如，用户数据或有关书籍的信息）。使用这种方法，从一个单一的主键值存储发展到一组相关值的存储。（可以把列族中存储的数据看作为一张映射图，或者将主键值存储到每一个值都是另外一张映射图的地方）。列族都存在一个单一的文件中，以实现更好的读取和写入相关数据的性能。这种方法的主要目的是实现在大数据时的高性能和高可用性。这个领域的领先技术是Goole的BigTable和Cassandra，最初都是由Facebook开发的。</p>
+<p>###小结<br>列族存储：</p>
+<p> 典型应用案例</p>
+<ul>
+<li>大规模写入</li>
+<li><p>并发数据访问（读和写）</p>
+<p>最著名的技术</p>
+</li>
+<li><p>Cassandra</p>
+</li>
+<li>Goole BigTable</li>
+<li>Apache HBase</li>
+</ul>
+<p>##面向文档的数据库<br>很多实际的问题需求看上去像是一个文件的数据结构。面向文档的数据库正好提供的这样的需求，用以存储简单的，但确实高效的，无架构的文档数据。文档模型中使用的数据结构，可以使你添加自包含的文件和关联关系到该文档的数据中。</p>
+<p>你可以将面向文档数据库，看作主键值存储，这里的值就是一个文件。这使得面向文档数据库更容易为通用软件问题建立数据模型，但这使得它的性能和可扩展性相比主键值和列族存储稍微有些降低。内置于存储系统的对象模型的遍历通常是一个对所有情况很好的权衡，但不包括大量的并发使用情况。</p>
+<p>###小结<br>面向文档数据库：</p>
+<p> 典型应用案例</p>
+<ul>
+<li>当域模型是一个自然文件</li>
+<li>使用自然文件数据结构简化开发</li>
+<li><p>高可扩展系统（尽管在主键值存储和列族存储的低层次上）</p>
+<p>最著名的技术</p>
+</li>
+<li><p>MongoDB</p>
+</li>
+<li>CouchDB</li>
+</ul>
+<p>##图形数据库<br>图形数据库的设计是从以下出发的，即开发人员常常在他们的应用程序中建立图形状的数据结构，单仍然将数据以一个非自然的方式存储，或者是在表格和关系数据库的列中，或者是在其他的NOSQL系统。如：ACL列表，社交网络或者任何类型的网络问题都是自然的图形问题。图形数据模型是图形数据库的核心，最终能够将代表图形的数据作为一个直接图形存储一个对象模型。</p>
+<p>这个数据模型可以自然地表达许多非常复杂的软件需求，图形遍历查询的效率和性能是图形数据库的主要优势。</p>
+<p>###小结<br>图形数据库：</p>
+<p> 典型应用案例</p>
+<ul>
+<li>拥有互联的数据</li>
+<li>能够自然的用节点和关系表达的域</li>
+<li>社交网络</li>
+<li>推荐引擎</li>
+<li><p>访问控制列表</p>
+<p>最著名的技术</p>
+</li>
+<li><p>Neo4j</p>
+</li>
+<li>AllegroGraph</li>
+<li>OrientDB</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://KeoZmy.github.io/2016/12/28/谈谈NoSQL——非关系型数据库概览/" data-id="cix8l9zoq00020gu5h3ig6o2x" class="article-share-link" data-share="baidu" data-title="谈谈NoSQL——非关系型数据库概览">Share</a>
+      
+
+      
+        <a href="http://KeoZmy.github.io/2016/12/28/谈谈NoSQL——非关系型数据库概览/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-neo4j学习笔记（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/12/26/neo4j学习笔记（一）/" class="article-date">
@@ -206,7 +320,7 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://KeoZmy.github.io/2016/12/26/neo4j学习笔记（一）/" data-id="cix62ac590001vgu5mhubnrjf" class="article-share-link" data-share="baidu" data-title="Neo4j学习笔记（一）初识Neo4j">Share</a>
+        <a data-url="http://KeoZmy.github.io/2016/12/26/neo4j学习笔记（一）/" data-id="cix8l9zol00010gu5twaxq9ts" class="article-share-link" data-share="baidu" data-title="Neo4j学习笔记（一）初识Neo4j">Share</a>
       
 
       
@@ -479,7 +593,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://KeoZmy.github.io/2016/12/26/SpringCloud整合php、python示例/" data-id="cix62ac5f0002vgu58lkguhnr" class="article-share-link" data-share="baidu" data-title="SpringCloud整合php、python示例">Share</a>
+        <a data-url="http://KeoZmy.github.io/2016/12/26/SpringCloud整合php、python示例/" data-id="cix8l9zp300030gu51dwi62ge" class="article-share-link" data-share="baidu" data-title="SpringCloud整合php、python示例">Share</a>
       
 
       
@@ -530,7 +644,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://KeoZmy.github.io/2016/12/26/hello-world/" data-id="cix62ac520000vgu5kiygej6w" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
+        <a data-url="http://KeoZmy.github.io/2016/12/26/hello-world/" data-id="cix8l9zoe00000gu5szwwz3f9" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
       
 
       
@@ -560,7 +674,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -570,6 +684,10 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/12/28/谈谈NoSQL——非关系型数据库概览/">谈谈NoSQL——非关系型数据库概览</a>
+          </li>
         
           <li>
             <a href="/2016/12/26/neo4j学习笔记（一）/">Neo4j学习笔记（一）初识Neo4j</a>
