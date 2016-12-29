@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://KeoZmy.github.io">
   <title>Neo4j学习笔记（一）初识Neo4j | Keo&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等">
+  <meta name="description" content="前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Neo4j学习笔记（一）初识Neo4j">
 <meta property="og:url" content="http://KeoZmy.github.io/2016/12/26/neo4j学习笔记（一）/index.html">
 <meta property="og:site_name" content="Keo's Blog">
-<meta property="og:description" content="##前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等">
+<meta property="og:description" content="前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系">
 <meta property="og:image" content="http://7xvxof.com1.z0.glb.clouddn.com/picture1.png">
 <meta property="og:image" content="http://neo4j.com.cn/public/docs/_images/image3.3.png">
 <meta property="og:image" content="http://neo4j.com.cn/public/docs/_images/image3.5.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://neo4j.com.cn/public/docs/_images/image3.10.png">
 <meta property="og:image" content="http://neo4j.com.cn/public/docs/_images/image3.11.png">
 <meta property="og:image" content="http://neo4j.com.cn/public/docs/_images/image3.12.png">
-<meta property="og:updated_time" content="2016-12-26T12:21:15.091Z">
+<meta property="og:updated_time" content="2016-12-29T02:26:31.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neo4j学习笔记（一）初识Neo4j">
-<meta name="twitter:description" content="##前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等">
+<meta name="twitter:description" content="前言第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系">
 <meta name="twitter:image" content="http://7xvxof.com1.z0.glb.clouddn.com/picture1.png">
   
     <link rel="alternative" href="/atom.xml" title="Keo&#39;s Blog" type="application/atom+xml">
@@ -177,8 +177,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##前言<br>第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系列理论课很重要是一样的道理。遂此刻，回头整理知识点，还是那句话，温故而知新，每一次的重新阅读，都会有不一样的收获。</p>
-<p>##简介<br>作为一款强健的，可伸缩的高性能数据库，Neo4j最适合完整的企业部署或者用于一个轻量级项目中完整服务器的一个子集存在。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系列理论课很重要是一样的道理。遂此刻，回头整理知识点，还是那句话，温故而知新，每一次的重新阅读，都会有不一样的收获。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>作为一款强健的，可伸缩的高性能数据库，Neo4j最适合完整的企业部署或者用于一个轻量级项目中完整服务器的一个子集存在。</p>
 <p>   它包括如下几个显著特点:</p>
 <pre><code>1.完整的ACID支持
 2.高可用性
@@ -186,18 +186,16 @@
 4.通过遍历工具高速检索数据
 </code></pre><p>   适当的ACID操作是保证数据一致性的基础。Neo4j确保了在一个事务里面的多个操作同时发生，保证数据一致性。不管是采用嵌入模式还是多服务器集群部署，都支持这一特性。</p>
 <p>   可靠的图型存储可以非常轻松的集成到任何一个应用中。随着我们开发的应用在运营中不断发展，性能问题肯定会逐步凸显出来，而Neo4j不管应用如何变化，他只会受到计算机硬件性能的影响，不受业务本身的约束。部署一个neo4j服务器便可以承载上亿级的节点和关系。当然，当单节点无法承载我们的数据需求时，我们可以进行分布式集群部署。将图数据库用于存储关系复杂的数据是他最大的优势。通过Neo4j提供的遍历工具，可以非常高效的进行数据检索，每秒可以达到上亿级的检索量。一个检索操作类似于RDBMS里面的连接（<em>join</em>）操作。</p>
-<p>##什么是图数据库？<br> Neo4j是世界领先的开源图形数据库。 它完全由使用Java语言通过新技术的发展。</p>
+<h2 id="什么是图数据库？"><a href="#什么是图数据库？" class="headerlink" title="什么是图数据库？"></a>什么是图数据库？</h2><p> Neo4j是世界领先的开源图形数据库。 它完全由使用Java语言通过新技术的发展。</p>
 <pre><code>一个开源
 Schema的自由
 没有SQL（Neo4j是使用CQL）
 图形数据库 
 </code></pre><p>图形数据库也被称为图形数据库管理系统或GDBMS。 </p>
 <p>官方网站：<a href="http://www.neo4j.org" target="_blank" rel="external">http://www.neo4j.org</a></p>
-<p>###从关系型数据库(RDBMS)到图数据库（GDBMS）</p>
-<p>图数据库是在图形结构的形式存储数据的数据库。 它存储在节点，关系和属性方面我们的应用程序的数据。 就像在表的“行，列”的形式的RDBMS存储数据，GDBMS在“图”的形式存储数据。 </p>
+<h3 id="从关系型数据库-RDBMS-到图数据库（GDBMS）"><a href="#从关系型数据库-RDBMS-到图数据库（GDBMS）" class="headerlink" title="从关系型数据库(RDBMS)到图数据库（GDBMS）"></a>从关系型数据库(RDBMS)到图数据库（GDBMS）</h3><p>图数据库是在图形结构的形式存储数据的数据库。 它存储在节点，关系和属性方面我们的应用程序的数据。 就像在表的“行，列”的形式的RDBMS存储数据，GDBMS在“图”的形式存储数据。 </p>
 <p>Relationships是图数据库中的很重要的部分（first-class citizens），不同于其他的数据库管理系统，图数据库连接两个实体（entities）是通过properties（属性），你可以类比于关系型数据库中的外键（foreign key）。通过组合简单抽象的nodes（节点）和relationships（关系）形成了一种连接结构，GDBMS让我们可以构建复杂的模型来映射我们所的问题域。</p>
-<p>##Neo4j的特点</p>
-<pre><code>SQL一样容易查询语言的Neo4j CQL
+<h2 id="Neo4j的特点"><a href="#Neo4j的特点" class="headerlink" title="Neo4j的特点"></a>Neo4j的特点</h2><pre><code>SQL一样容易查询语言的Neo4j CQL
 
 它遵循属性图数据模型
 
@@ -218,8 +216,7 @@ Schema的自由
 它提供了Java Script支持以任何UI MVC框架如Node JS进行访问。
 
 它支持两种类型的Java API：Cypher支架API和本地Java API来开发Java应用程序。 
-</code></pre><p>###优势</p>
-<pre><code> 这是很容易以表示连接数据。
+</code></pre><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><pre><code> 这是很容易以表示连接数据。
 
 这是很容易和更快的检索更多的数据/遍历/导航。
 
@@ -230,12 +227,10 @@ Neo4j的CQL查询语言命令在人性化的可读格式，非常简单易学。
 它使用简单，功能强大的数据模型。
 
 它不需要复杂的连接来获取连接/相关的数据，因为它是非常方便地检索它的相邻节点或关系的细节没有加入或索引。 
-</code></pre><p>###缺点</p>
-<pre><code>它具有支持节点，关系和属性的数量的限制。
+</code></pre><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><pre><code>它具有支持节点，关系和属性的数量的限制。
 
 它不支持拆分。 
-</code></pre><p>##Neo4j数据模型</p>
-<p>如下如所示</p>
+</code></pre><h2 id="Neo4j数据模型"><a href="#Neo4j数据模型" class="headerlink" title="Neo4j数据模型"></a>Neo4j数据模型</h2><p>如下如所示</p>
 <p><img src="http://7xvxof.com1.z0.glb.clouddn.com/picture1.png" alt=""></p>
 <p>这是我们从neo4j的管理端看到现有数据的关系，一个简单的图（graph）,由此图引出Neo4j中很重要的三个概念：</p>
 <pre><code>Node： 图一中的圆点就是节点，图二中出现的MOVIEWS、USERS是节点的类型，用Label表示
@@ -257,10 +252,8 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
 关系是有方向的：单向和双向。
 
 每个关系包含“开始节点”或者“从节点”和“节点”或“端节点” 
-</code></pre><p>###节点（Node）</p>
-<p>构成一张图的基本元素是节点和关系。在Neo4j中，节点和关系都可以包含属性。 节点经常被用于表示一些实体，但依赖关系也一样可以表示实体。</p>
-<p>###关系（Relationship）</p>
-<p>节点之间的关系是图数据库很重要的一部分。通过关系可以找到很多关联的数据，比如节点集合，关系集合以及他们的属性集合。</p>
+</code></pre><h3 id="节点（Node）"><a href="#节点（Node）" class="headerlink" title="节点（Node）"></a>节点（Node）</h3><p>构成一张图的基本元素是节点和关系。在Neo4j中，节点和关系都可以包含属性。 节点经常被用于表示一些实体，但依赖关系也一样可以表示实体。</p>
+<h3 id="关系（Relationship）"><a href="#关系（Relationship）" class="headerlink" title="关系（Relationship）"></a>关系（Relationship）</h3><p>节点之间的关系是图数据库很重要的一部分。通过关系可以找到很多关联的数据，比如节点集合，关系集合以及他们的属性集合。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.3.png" alt=""></p>
 <p>一个关系连接两个节点，必须有一个开始节点和结束节点。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.5.png" alt=""></p>
@@ -271,18 +264,16 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
 <p>特别注意一个节点可以有一个关系是指向自己的：</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.7.png" alt=""></p>
 <p>为了将来增强遍历图中所有的关系，我们需要为关系设置类型。注意 关键字 type 在这可能会被误解，你其实可以把他简单的理解为一个标签而已。</p>
-<p>###属性（Property）<br>节点和关系都可以设置自己的属性。 属性是由Key-Value键值对组成，键名是字符串。属性值是要么是原始值，要么是原始值类型的一个数组。比如String、int和int[]都是合法的。</p>
+<h3 id="属性（Property）"><a href="#属性（Property）" class="headerlink" title="属性（Property）"></a>属性（Property）</h3><p>节点和关系都可以设置自己的属性。 属性是由Key-Value键值对组成，键名是字符串。属性值是要么是原始值，要么是原始值类型的一个数组。比如String、int和int[]都是合法的。</p>
 <p>注意<br>    null不是一个合法的属性值。 Nulls能代替模仿一个不存在的Key。 </p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.9.png" alt=""></p>
-<p>###路径（Path）</p>
-<p>路径由至少一个节点，通过各种关系连接组成，经常是作为一个查询或者遍历的结果。</p>
+<h3 id="路径（Path）"><a href="#路径（Path）" class="headerlink" title="路径（Path）"></a>路径（Path）</h3><p>路径由至少一个节点，通过各种关系连接组成，经常是作为一个查询或者遍历的结果。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.10.png" alt=""></p>
 <p>最短的路径是0长度的像下面这样：</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.11.png" alt=""></p>
 <p>长度为1的路径如下:</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.12.png" alt=""></p>
-<p>###遍历（Traversal）</p>
-<p>遍历一张图就是按照一定的规则，跟随他们的关系，访问关联的的节点集合。最多的情况是只有一部分子图被访问到，因为你知道你对那一部分节点或者关系感兴趣。</p>
+<h3 id="遍历（Traversal）"><a href="#遍历（Traversal）" class="headerlink" title="遍历（Traversal）"></a>遍历（Traversal）</h3><p>遍历一张图就是按照一定的规则，跟随他们的关系，访问关联的的节点集合。最多的情况是只有一部分子图被访问到，因为你知道你对那一部分节点或者关系感兴趣。</p>
 <p>Neo4j提供了遍历的API，可以让你指定遍历规则。最简单的设置就是设置遍历是宽度优先还是深度优先。后面我会花很多篇幅纤细介绍。</p>
 
       

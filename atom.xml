@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://KeoZmy.github.io/"/>
-  <updated>2016-12-28T06:56:36.878Z</updated>
+  <updated>2016-12-29T02:27:00.113Z</updated>
   <id>http://KeoZmy.github.io/</id>
   
   <author>
@@ -20,10 +20,9 @@
     <link href="http://KeoZmy.github.io/2016/12/28/%E8%B0%88%E8%B0%88NoSQL%E2%80%94%E2%80%94%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%A7%88/"/>
     <id>http://KeoZmy.github.io/2016/12/28/谈谈NoSQL——非关系型数据库概览/</id>
     <published>2016-12-28T06:55:37.468Z</published>
-    <updated>2016-12-28T06:56:36.878Z</updated>
+    <updated>2016-12-29T02:27:00.113Z</updated>
     
-    <content type="html"><![CDATA[<p>#NoSql</p>
-<p>##前言<br>随着大数据时代的崛起，应用程序需要处理的数据的复杂性大大增加，数据的复杂性不仅包括它的大小，还包括它的相互关联性，结构的千变万化以及对数据的同时访问。<br>假设，我们要查询一组数据，但是join了4、5次，进行一次搜索深度为4的查询，这将会为关系型数据引擎带来巨大的压力，当数据量过大时，每增加一个深度，无意再先前的基数上再做笛卡尔积，如果有1000条数据，我要通过关系型数据库进行深度为5的查询，那将会产生1000的5次方个记录，然而这仅仅是1000条数据，真正的大数据环境下，至少都是上百万条的数据，显然，关系型数据库在这种复杂的对象映射关系中并不适合，所以NoSql的概念也已应运而生。</p>
+    <content type="html"><![CDATA[<h1 id="NoSql"><a href="#NoSql" class="headerlink" title="NoSql"></a>NoSql</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随着大数据时代的崛起，应用程序需要处理的数据的复杂性大大增加，数据的复杂性不仅包括它的大小，还包括它的相互关联性，结构的千变万化以及对数据的同时访问。<br>假设，我们要查询一组数据，但是join了4、5次，进行一次搜索深度为4的查询，这将会为关系型数据引擎带来巨大的压力，当数据量过大时，每增加一个深度，无意再先前的基数上再做笛卡尔积，如果有1000条数据，我要通过关系型数据库进行深度为5的查询，那将会产生1000的5次方个记录，然而这仅仅是1000条数据，真正的大数据环境下，至少都是上百万条的数据，显然，关系型数据库在这种复杂的对象映射关系中并不适合，所以NoSql的概念也已应运而生。</p>
 <p>尽管NoSQL的名字已经被人们所接受，但这个并没有准确反映出其代表的意义，反而给人们以错误的映像，认为它只是对SQL而言的一个概念。相对而言，叫做”非关系型数据库”会更合适一些，因为 关系型/非关系范式才是我们关注的point，而SQL只是关系型技术使用的一种语言。</p>
 <p>非关系型数据库主要有四类：</p>
 <ul>
@@ -35,7 +34,7 @@
 <h2 id="主键值存储"><a href="#主键值存储" class="headerlink" title="主键值存储"></a>主键值存储</h2><p>主键值存储代表了最简单，但却非常强大的处理大量并发访问数据的方法。缓存是一种典型的主键值技术。主键值存储允许使用非常简单的结构存储数据，这些数据常常在内存中，甚至在高并发环境下的高速访问。</p>
 <p>这些数据存储在一个巨大的哈希表中，由主键进行访问。数据取主键值对的形式，对其操作大都局限于使用简单的put(write)和get(read)操作。其值仅支持简单的数据结构如文本或二进制内容，虽然一些较新的主键值存储支持一组有限的复杂数据类型（如：Redis支持列表和映射作为值）。</p>
 <p>主键值存储是最简单的NOSQL技术。所有其他的NOSQL类别都建立在简单性、高性能和可扩展性的主键值存储技术上，以更好的适合一些特定的使用场所。</p>
-<p>###小结<br>主键值存储：</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>主键值存储：</p>
 <p> 典型应用案例</p>
 <ul>
 <li>缓存</li>
@@ -48,10 +47,9 @@
 <li>Memcached</li>
 <li>Tokyo Cabinet</li>
 </ul>
-<p>##列族存储</p>
-<p>分布式主键值模型缩放的很好，但是在这模型中，必须使用某些类型的数据结构。这就是列族存储类如何进入到NOSQL领域中的。</p>
+<h2 id="列族存储"><a href="#列族存储" class="headerlink" title="列族存储"></a>列族存储</h2><p>分布式主键值模型缩放的很好，但是在这模型中，必须使用某些类型的数据结构。这就是列族存储类如何进入到NOSQL领域中的。</p>
 <p>列族存储是将类似的值（或列）作为一组一起存储在同一列族中（例如，用户数据或有关书籍的信息）。使用这种方法，从一个单一的主键值存储发展到一组相关值的存储。（可以把列族中存储的数据看作为一张映射图，或者将主键值存储到每一个值都是另外一张映射图的地方）。列族都存在一个单一的文件中，以实现更好的读取和写入相关数据的性能。这种方法的主要目的是实现在大数据时的高性能和高可用性。这个领域的领先技术是Goole的BigTable和Cassandra，最初都是由Facebook开发的。</p>
-<p>###小结<br>列族存储：</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>列族存储：</p>
 <p> 典型应用案例</p>
 <ul>
 <li>大规模写入</li>
@@ -63,9 +61,9 @@
 <li>Goole BigTable</li>
 <li>Apache HBase</li>
 </ul>
-<p>##面向文档的数据库<br>很多实际的问题需求看上去像是一个文件的数据结构。面向文档的数据库正好提供的这样的需求，用以存储简单的，但确实高效的，无架构的文档数据。文档模型中使用的数据结构，可以使你添加自包含的文件和关联关系到该文档的数据中。</p>
+<h2 id="面向文档的数据库"><a href="#面向文档的数据库" class="headerlink" title="面向文档的数据库"></a>面向文档的数据库</h2><p>很多实际的问题需求看上去像是一个文件的数据结构。面向文档的数据库正好提供的这样的需求，用以存储简单的，但确实高效的，无架构的文档数据。文档模型中使用的数据结构，可以使你添加自包含的文件和关联关系到该文档的数据中。</p>
 <p>你可以将面向文档数据库，看作主键值存储，这里的值就是一个文件。这使得面向文档数据库更容易为通用软件问题建立数据模型，但这使得它的性能和可扩展性相比主键值和列族存储稍微有些降低。内置于存储系统的对象模型的遍历通常是一个对所有情况很好的权衡，但不包括大量的并发使用情况。</p>
-<p>###小结<br>面向文档数据库：</p>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>面向文档数据库：</p>
 <p> 典型应用案例</p>
 <ul>
 <li>当域模型是一个自然文件</li>
@@ -77,9 +75,9 @@
 </li>
 <li>CouchDB</li>
 </ul>
-<p>##图形数据库<br>图形数据库的设计是从以下出发的，即开发人员常常在他们的应用程序中建立图形状的数据结构，单仍然将数据以一个非自然的方式存储，或者是在表格和关系数据库的列中，或者是在其他的NOSQL系统。如：ACL列表，社交网络或者任何类型的网络问题都是自然的图形问题。图形数据模型是图形数据库的核心，最终能够将代表图形的数据作为一个直接图形存储一个对象模型。</p>
+<h2 id="图形数据库"><a href="#图形数据库" class="headerlink" title="图形数据库"></a>图形数据库</h2><p>图形数据库的设计是从以下出发的，即开发人员常常在他们的应用程序中建立图形状的数据结构，单仍然将数据以一个非自然的方式存储，或者是在表格和关系数据库的列中，或者是在其他的NOSQL系统。如：ACL列表，社交网络或者任何类型的网络问题都是自然的图形问题。图形数据模型是图形数据库的核心，最终能够将代表图形的数据作为一个直接图形存储一个对象模型。</p>
 <p>这个数据模型可以自然地表达许多非常复杂的软件需求，图形遍历查询的效率和性能是图形数据库的主要优势。</p>
-<p>###小结<br>图形数据库：</p>
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>图形数据库：</p>
 <p> 典型应用案例</p>
 <ul>
 <li>拥有互联的数据</li>
@@ -98,8 +96,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;#NoSql&lt;/p&gt;
-&lt;p&gt;##前言&lt;br&gt;随着大数据时代的崛起，应用程序需要处理的数据的复杂性大大增加，数据的复杂性不仅包括它的大小，还包括它的相互关联性，结构的千变万化以及对数据的同时访问。&lt;br&gt;假设，我们要查询一组数据，但是join了4、5次，进行一次搜索深度为4的
+      &lt;h1 id=&quot;NoSql&quot;&gt;&lt;a href=&quot;#NoSql&quot; class=&quot;headerlink&quot; title=&quot;NoSql&quot;&gt;&lt;/a&gt;NoSql&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前
     
     </summary>
     
@@ -111,10 +108,10 @@
     <link href="http://KeoZmy.github.io/2016/12/26/neo4j%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://KeoZmy.github.io/2016/12/26/neo4j学习笔记（一）/</id>
     <published>2016-12-26T12:21:28.153Z</published>
-    <updated>2016-12-26T12:21:15.091Z</updated>
+    <updated>2016-12-29T02:26:31.623Z</updated>
     
-    <content type="html"><![CDATA[<p>##前言<br>第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系列理论课很重要是一样的道理。遂此刻，回头整理知识点，还是那句话，温故而知新，每一次的重新阅读，都会有不一样的收获。</p>
-<p>##简介<br>作为一款强健的，可伸缩的高性能数据库，Neo4j最适合完整的企业部署或者用于一个轻量级项目中完整服务器的一个子集存在。</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解的不够透彻，从而直接影响了我的进度，我有了很多的疑惑。“理论支撑实践”，果然是至理名言，就像当年读书的时候，老师反反复复强调数据结构等一系列理论课很重要是一样的道理。遂此刻，回头整理知识点，还是那句话，温故而知新，每一次的重新阅读，都会有不一样的收获。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>作为一款强健的，可伸缩的高性能数据库，Neo4j最适合完整的企业部署或者用于一个轻量级项目中完整服务器的一个子集存在。</p>
 <p>   它包括如下几个显著特点:</p>
 <pre><code>1.完整的ACID支持
 2.高可用性
@@ -122,18 +119,16 @@
 4.通过遍历工具高速检索数据
 </code></pre><p>   适当的ACID操作是保证数据一致性的基础。Neo4j确保了在一个事务里面的多个操作同时发生，保证数据一致性。不管是采用嵌入模式还是多服务器集群部署，都支持这一特性。</p>
 <p>   可靠的图型存储可以非常轻松的集成到任何一个应用中。随着我们开发的应用在运营中不断发展，性能问题肯定会逐步凸显出来，而Neo4j不管应用如何变化，他只会受到计算机硬件性能的影响，不受业务本身的约束。部署一个neo4j服务器便可以承载上亿级的节点和关系。当然，当单节点无法承载我们的数据需求时，我们可以进行分布式集群部署。将图数据库用于存储关系复杂的数据是他最大的优势。通过Neo4j提供的遍历工具，可以非常高效的进行数据检索，每秒可以达到上亿级的检索量。一个检索操作类似于RDBMS里面的连接（<em>join</em>）操作。</p>
-<p>##什么是图数据库？<br> Neo4j是世界领先的开源图形数据库。 它完全由使用Java语言通过新技术的发展。</p>
+<h2 id="什么是图数据库？"><a href="#什么是图数据库？" class="headerlink" title="什么是图数据库？"></a>什么是图数据库？</h2><p> Neo4j是世界领先的开源图形数据库。 它完全由使用Java语言通过新技术的发展。</p>
 <pre><code>一个开源
 Schema的自由
 没有SQL（Neo4j是使用CQL）
 图形数据库 
 </code></pre><p>图形数据库也被称为图形数据库管理系统或GDBMS。 </p>
 <p>官方网站：<a href="http://www.neo4j.org" target="_blank" rel="external">http://www.neo4j.org</a></p>
-<p>###从关系型数据库(RDBMS)到图数据库（GDBMS）</p>
-<p>图数据库是在图形结构的形式存储数据的数据库。 它存储在节点，关系和属性方面我们的应用程序的数据。 就像在表的“行，列”的形式的RDBMS存储数据，GDBMS在“图”的形式存储数据。 </p>
+<h3 id="从关系型数据库-RDBMS-到图数据库（GDBMS）"><a href="#从关系型数据库-RDBMS-到图数据库（GDBMS）" class="headerlink" title="从关系型数据库(RDBMS)到图数据库（GDBMS）"></a>从关系型数据库(RDBMS)到图数据库（GDBMS）</h3><p>图数据库是在图形结构的形式存储数据的数据库。 它存储在节点，关系和属性方面我们的应用程序的数据。 就像在表的“行，列”的形式的RDBMS存储数据，GDBMS在“图”的形式存储数据。 </p>
 <p>Relationships是图数据库中的很重要的部分（first-class citizens），不同于其他的数据库管理系统，图数据库连接两个实体（entities）是通过properties（属性），你可以类比于关系型数据库中的外键（foreign key）。通过组合简单抽象的nodes（节点）和relationships（关系）形成了一种连接结构，GDBMS让我们可以构建复杂的模型来映射我们所的问题域。</p>
-<p>##Neo4j的特点</p>
-<pre><code>SQL一样容易查询语言的Neo4j CQL
+<h2 id="Neo4j的特点"><a href="#Neo4j的特点" class="headerlink" title="Neo4j的特点"></a>Neo4j的特点</h2><pre><code>SQL一样容易查询语言的Neo4j CQL
 
 它遵循属性图数据模型
 
@@ -154,8 +149,7 @@ Schema的自由
 它提供了Java Script支持以任何UI MVC框架如Node JS进行访问。
 
 它支持两种类型的Java API：Cypher支架API和本地Java API来开发Java应用程序。 
-</code></pre><p>###优势</p>
-<pre><code> 这是很容易以表示连接数据。
+</code></pre><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><pre><code> 这是很容易以表示连接数据。
 
 这是很容易和更快的检索更多的数据/遍历/导航。
 
@@ -166,12 +160,10 @@ Neo4j的CQL查询语言命令在人性化的可读格式，非常简单易学。
 它使用简单，功能强大的数据模型。
 
 它不需要复杂的连接来获取连接/相关的数据，因为它是非常方便地检索它的相邻节点或关系的细节没有加入或索引。 
-</code></pre><p>###缺点</p>
-<pre><code>它具有支持节点，关系和属性的数量的限制。
+</code></pre><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><pre><code>它具有支持节点，关系和属性的数量的限制。
 
 它不支持拆分。 
-</code></pre><p>##Neo4j数据模型</p>
-<p>如下如所示</p>
+</code></pre><h2 id="Neo4j数据模型"><a href="#Neo4j数据模型" class="headerlink" title="Neo4j数据模型"></a>Neo4j数据模型</h2><p>如下如所示</p>
 <p><img src="http://7xvxof.com1.z0.glb.clouddn.com/picture1.png" alt=""></p>
 <p>这是我们从neo4j的管理端看到现有数据的关系，一个简单的图（graph）,由此图引出Neo4j中很重要的三个概念：</p>
 <pre><code>Node： 图一中的圆点就是节点，图二中出现的MOVIEWS、USERS是节点的类型，用Label表示
@@ -193,10 +185,8 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
 关系是有方向的：单向和双向。
 
 每个关系包含“开始节点”或者“从节点”和“节点”或“端节点” 
-</code></pre><p>###节点（Node）</p>
-<p>构成一张图的基本元素是节点和关系。在Neo4j中，节点和关系都可以包含属性。 节点经常被用于表示一些实体，但依赖关系也一样可以表示实体。</p>
-<p>###关系（Relationship）</p>
-<p>节点之间的关系是图数据库很重要的一部分。通过关系可以找到很多关联的数据，比如节点集合，关系集合以及他们的属性集合。</p>
+</code></pre><h3 id="节点（Node）"><a href="#节点（Node）" class="headerlink" title="节点（Node）"></a>节点（Node）</h3><p>构成一张图的基本元素是节点和关系。在Neo4j中，节点和关系都可以包含属性。 节点经常被用于表示一些实体，但依赖关系也一样可以表示实体。</p>
+<h3 id="关系（Relationship）"><a href="#关系（Relationship）" class="headerlink" title="关系（Relationship）"></a>关系（Relationship）</h3><p>节点之间的关系是图数据库很重要的一部分。通过关系可以找到很多关联的数据，比如节点集合，关系集合以及他们的属性集合。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.3.png" alt=""></p>
 <p>一个关系连接两个节点，必须有一个开始节点和结束节点。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.5.png" alt=""></p>
@@ -207,24 +197,22 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
 <p>特别注意一个节点可以有一个关系是指向自己的：</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.7.png" alt=""></p>
 <p>为了将来增强遍历图中所有的关系，我们需要为关系设置类型。注意 关键字 type 在这可能会被误解，你其实可以把他简单的理解为一个标签而已。</p>
-<p>###属性（Property）<br>节点和关系都可以设置自己的属性。 属性是由Key-Value键值对组成，键名是字符串。属性值是要么是原始值，要么是原始值类型的一个数组。比如String、int和int[]都是合法的。</p>
+<h3 id="属性（Property）"><a href="#属性（Property）" class="headerlink" title="属性（Property）"></a>属性（Property）</h3><p>节点和关系都可以设置自己的属性。 属性是由Key-Value键值对组成，键名是字符串。属性值是要么是原始值，要么是原始值类型的一个数组。比如String、int和int[]都是合法的。</p>
 <p>注意<br>    null不是一个合法的属性值。 Nulls能代替模仿一个不存在的Key。 </p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.9.png" alt=""></p>
-<p>###路径（Path）</p>
-<p>路径由至少一个节点，通过各种关系连接组成，经常是作为一个查询或者遍历的结果。</p>
+<h3 id="路径（Path）"><a href="#路径（Path）" class="headerlink" title="路径（Path）"></a>路径（Path）</h3><p>路径由至少一个节点，通过各种关系连接组成，经常是作为一个查询或者遍历的结果。</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.10.png" alt=""></p>
 <p>最短的路径是0长度的像下面这样：</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.11.png" alt=""></p>
 <p>长度为1的路径如下:</p>
 <p><img src="http://neo4j.com.cn/public/docs/_images/image3.12.png" alt=""></p>
-<p>###遍历（Traversal）</p>
-<p>遍历一张图就是按照一定的规则，跟随他们的关系，访问关联的的节点集合。最多的情况是只有一部分子图被访问到，因为你知道你对那一部分节点或者关系感兴趣。</p>
+<h3 id="遍历（Traversal）"><a href="#遍历（Traversal）" class="headerlink" title="遍历（Traversal）"></a>遍历（Traversal）</h3><p>遍历一张图就是按照一定的规则，跟随他们的关系，访问关联的的节点集合。最多的情况是只有一部分子图被访问到，因为你知道你对那一部分节点或者关系感兴趣。</p>
 <p>Neo4j提供了遍历的API，可以让你指定遍历规则。最简单的设置就是设置遍历是宽度优先还是深度优先。后面我会花很多篇幅纤细介绍。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;##前言&lt;br&gt;第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一下Neo4j，本来不打算写Neo4j的博客了，造完服务就算了，但是越是到后面，越是觉得自己对Neo4j中的一些概念理解
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;第一次听到Neo4j，是在前天，我接到了一个task，自己造一个Neo4j的服务，并用docker搭建一个Neo4j的服务器。这两天学习了一
     
     </summary>
     
@@ -236,126 +224,39 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
     <link href="http://KeoZmy.github.io/2016/12/26/SpringCloud%E6%95%B4%E5%90%88php%E3%80%81python%E7%A4%BA%E4%BE%8B/"/>
     <id>http://KeoZmy.github.io/2016/12/26/SpringCloud整合php、python示例/</id>
     <published>2016-12-26T07:46:17.000Z</published>
-    <updated>2016-12-26T12:29:58.864Z</updated>
+    <updated>2016-12-29T02:28:20.801Z</updated>
     
     <content type="html"><![CDATA[<p>代码已上传至： <a href="https://github.com/KeoZmy/SpringCloudDemo.git" target="_blank" rel="external">https://github.com/KeoZmy/SpringCloudDemo.git</a> ，博客中没有写到网关 zuul，但是git中已上传</p>
-<p>##前言</p>
-<p>最近一直在花时间研究微服务，各种开源组件组合一个framework到最后决定用springcloud这样成熟的framework。不得不说，springcloud确实很强大，还有Pivotal和Netfix是其强大的后盾与技术输出。最后还是选用了springcloud的netfix作为核心的开发。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近一直在花时间研究微服务，各种开源组件组合一个framework到最后决定用springcloud这样成熟的framework。不得不说，springcloud确实很强大，还有Pivotal和Netfix是其强大的后盾与技术输出。最后还是选用了springcloud的netfix作为核心的开发。</p>
 <p>springcloud中的sidecar是出于netfix中prana的启发，正如官方reference所说：</p>
 <p>Do you have non-jvm languages you want to take advantage of Eureka, Ribbon and Config Server? The Spring Cloud Netflix Sidecar was inspired by Netflix Prana. It includes a simple http api to get all of the instances (ie host and port) for a given service. You can also proxy service calls through an embedded Zuul proxy which gets its route entries from Eureka. The Spring Cloud Config Server can be accessed directly via host lookup or through the Zuul Proxy. The non-jvm app should implement a health check so the Sidecar can report to eureka if the app is up or down</p>
 <p>你是否有非jvm语言应用程序需要使用Eureka, Ribbon和Config Server的功能? Spring Cloud Netflix Sidecar 受 Netflix Prana 启发. 它包含一个简单的HTTP API去获取所有注册的实例信息(包括host和port信息). 你也可以通过依赖Eureka的嵌入式Zuul代理器代理服务调用. The Spring Cloud Config Server可以通过host查找 或Zuul代理直接进入. 非JVM应用程序提供健康检查实现即可让Sidecar向eureka同步应用程序up还是down.</p>
 <p>简单的说，一个非jvm程序，如：php、python等，想要注册到eureka，但是应用都是一堆别的语言写的，那我应该如何实现呢？Sidecar的原理就是侦听该应用所运行的端口，然后检测该程序的运行状态，官方的描述会更形象一些：</p>
 <p><img src="http://i.imgur.com/ilU73lu.png" alt=""></p>
-<p>##实现</p>
-<p>本文主要是参考官方给出结合python的例子，示例了一个springcloud结合php、python的例子。</p>
-<p>###php准备</p>
-<p>先准备一下php的环境，详见：</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>本文主要是参考官方给出结合python的例子，示例了一个springcloud结合php、python的例子。</p>
+<h3 id="php准备"><a href="#php准备" class="headerlink" title="php准备"></a>php准备</h3><p>先准备一下php的环境，详见：</p>
 <p><a href="http://jingyan.baidu.com/article/cd4c2979f4797e756e6e6086.html" target="_blank" rel="external">使用WAMP快速搭建PHP Web开发环境</a></p>
 <p>(ps:我没有做过php的相关开发，只是最近参与公司项目的重构，里面以java代码为主但是也有python、php的模块，自己快速搭建了一个php的demo做测试，如果你是专业的php developer你当然可以选择你自己的方式)</p>
 <p>我的wamp服务器www目录：</p>
 <p><img src="http://i.imgur.com/q7K3c0r.png" alt=""></p>
 <p>health.json就是非JVM应用程序提供模仿SpringBoot健康检查接口的可访问的uri. 它应该返回一个json文档类似如下:</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">by the way，我把服务器的端口改成了3000，默认的是80</div><div class="line"></div><div class="line">[如何修改wamp默认80端口](http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html)</div><div class="line"></div><div class="line"></div><div class="line">###python准备（python大神请随意）</div><div class="line"></div><div class="line">这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</div><div class="line"></div><div class="line"></div><div class="line">    import httplib</div><div class="line"></div><div class="line">	from twisted.web import server, resource</div><div class="line">	from twisted.internet import reactor, endpoints</div><div class="line"></div><div class="line">	class Health(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    	def render_GET(self, request):</div><div class="line">       	 request.setHeader(&quot;content-type&quot;, &quot;application/json&quot;)</div><div class="line">       	 return &apos;&#123;&quot;status&quot;:&quot;UP&quot;&#125;\n&apos;</div><div class="line"></div><div class="line">	class Fortune(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    def render_GET(self, request):</div><div class="line">        conn = httplib.HTTPConnection(&apos;localhost&apos;, 5678)</div><div class="line">        conn.request(&quot;GET&quot;, &quot;/fortunes&quot;)</div><div class="line">        res = conn.getresponse()</div><div class="line">        fortune = res.read()</div><div class="line">        request.setHeader(&quot;content-type&quot;, &quot;text/plain&quot;)</div><div class="line">        return fortune</div><div class="line"></div><div class="line"></div><div class="line">	root = resource.Resource()</div><div class="line">	root.putChild(&apos;health&apos;, Health())	</div><div class="line">	root.putChild(&apos;&apos;, Fortune())</div><div class="line">	endpoints.serverFromString(reactor, &quot;tcp:5680&quot;).listen(server.Site(root))</div><div class="line">	reactor.run()</div><div class="line"></div><div class="line"></div><div class="line">###Eureka</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line">    </div><div class="line">  </div><div class="line">	&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">     &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;eureka&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;eureka&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;</div><div class="line"></div><div class="line">修改application.properties配置文件</div></pre></td></tr></table></figure>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">by the way，我把服务器的端口改成了3000，默认的是80</div><div class="line"></div><div class="line">[如何修改wamp默认80端口](http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html)</div><div class="line"></div><div class="line"></div><div class="line">### python准备（python大神请随意）</div><div class="line"></div><div class="line">这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</div><div class="line"></div><div class="line">    import httplib</div><div class="line"></div><div class="line">	from twisted.web import server, resource</div><div class="line">	from twisted.internet import reactor, endpoints</div><div class="line"></div><div class="line">	class Health(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    	def render_GET(self, request):</div><div class="line">       	 request.setHeader(&quot;content-type&quot;, &quot;application/json&quot;)</div><div class="line">       	 return &apos;&#123;&quot;status&quot;:&quot;UP&quot;&#125;\n&apos;</div><div class="line"></div><div class="line">	class Fortune(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    def render_GET(self, request):</div><div class="line">        conn = httplib.HTTPConnection(&apos;localhost&apos;, 5678)</div><div class="line">        conn.request(&quot;GET&quot;, &quot;/fortunes&quot;)</div><div class="line">        res = conn.getresponse()</div><div class="line">        fortune = res.read()</div><div class="line">        request.setHeader(&quot;content-type&quot;, &quot;text/plain&quot;)</div><div class="line">        return fortune</div><div class="line"></div><div class="line"></div><div class="line">	root = resource.Resource()</div><div class="line">	root.putChild(&apos;health&apos;, Health())	</div><div class="line">	root.putChild(&apos;&apos;, Fortune())</div><div class="line">	endpoints.serverFromString(reactor, &quot;tcp:5680&quot;).listen(server.Site(root))</div><div class="line">	reactor.run()</div><div class="line"></div><div class="line"></div><div class="line">### Eureka</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line">    </div><div class="line">  </div><div class="line">	&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">     &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;eureka&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;eureka&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;</div><div class="line"></div><div class="line">修改application.properties配置文件</div></pre></td></tr></table></figure>
 
 server.port=8761
 eureka.client.fetch-registry=false
 eureka.client.register-with-eureka=false
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后，我们在EurekaApplication中添加注解`@EnableEurekaServer`，开启服务的注册中心</div><div class="line"></div><div class="line">![](http://i.imgur.com/h3H7XIB.png)</div><div class="line"></div><div class="line"></div><div class="line">项目目录结构如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/tWIMLjS.png)</div><div class="line"></div><div class="line">###Configserver</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div></pre></td></tr></table></figure>
-<pre><code> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
-&lt;groupId&gt;org.test&lt;/groupId&gt;
-&lt;artifactId&gt;configserver&lt;/artifactId&gt;
-&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-&lt;packaging&gt;jar&lt;/packaging&gt;
-
-&lt;name&gt;configserver&lt;/name&gt;
-&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
-
-&lt;parent&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
-    &lt;version&gt;1.2.5.RELEASE&lt;/version&gt;
-    &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
-&lt;/parent&gt;
-
-&lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;java.version&gt;1.8&lt;/java.version&gt;
-&lt;/properties&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;
-        &lt;exclusions&gt;
-            &lt;exclusion&gt;
-                &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-security-rsa&lt;/artifactId&gt;
-            &lt;/exclusion&gt;
-        &lt;/exclusions&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-cloud-starter-eureka&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-        &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;
-        &lt;version&gt;RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
-        &lt;version&gt;RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-&lt;dependencyManagement&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;
-            &lt;version&gt;Angel.SR3&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/dependencyManagement&gt;
-
-&lt;build&gt;
-    &lt;plugins&gt;
-        &lt;plugin&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-        &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
- &lt;/project&gt;
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">修改application.properties配置文件:</div></pre></td></tr></table></figure>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后，我们在EurekaApplication中添加注解`@EnableEurekaServer`，开启服务的注册中心</div><div class="line"></div><div class="line">![](http://i.imgur.com/h3H7XIB.png)</div><div class="line"></div><div class="line"></div><div class="line">项目目录结构如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/tWIMLjS.png)</div><div class="line"></div><div class="line">### Configserver</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line"></div><div class="line"></div><div class="line">     &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">    &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;configserver&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;configserver&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</div><div class="line">			&lt;exclusions&gt;</div><div class="line">				&lt;exclusion&gt;</div><div class="line">					&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</div><div class="line">					&lt;artifactId&gt;spring-security-rsa&lt;/artifactId&gt;</div><div class="line">				&lt;/exclusion&gt;</div><div class="line">			&lt;/exclusions&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">修改application.properties配置文件:</div></pre></td></tr></table></figure>
 <pre><code>server.port=8888
 spring.cloud.config.server.git.uri=https://github.com/spencergibb/oscon-config-repo
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这里还有一个配置文件bootstrap.properties：</div></pre></td></tr></table></figure>
 <pre><code>server.port=5678
 sidecar.port=3000
 sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">项目目录如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/Hblz6iN.png)</div><div class="line"></div><div class="line">###sidecar for php</div><div class="line"></div><div class="line">开始编写一个为php应用对接的sidecar程序</div><div class="line"></div><div class="line">同样，这是一个springboot程序，我们先改写pom.xml文件</div></pre></td></tr></table></figure>
+</code></pre><p>```</p>
+<p>项目目录如下：</p>
+<p><img src="http://i.imgur.com/Hblz6iN.png" alt=""></p>
+<h3 id="sidecar-for-php"><a href="#sidecar-for-php" class="headerlink" title="sidecar for php"></a>sidecar for php</h3><p>开始编写一个为php应用对接的sidecar程序</p>
+<p>同样，这是一个springboot程序，我们先改写pom.xml文件</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
@@ -441,23 +342,23 @@ sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
     &lt;/plugins&gt;
 &lt;/build&gt;
 &lt;/project&gt;
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">然后在程序中开启@EnableSidecar</div><div class="line"></div><div class="line">![](http://i.imgur.com/ovJJGFH.png)</div><div class="line"></div><div class="line">最后，关键性的一步，我们改写application.properties文件</div></pre></td></tr></table></figure>
+</code></pre><p>然后在程序中开启@EnableSidecar</p>
+<p><img src="http://i.imgur.com/ovJJGFH.png" alt=""></p>
+<p>最后，关键性的一步，我们改写application.properties文件</p>
 <pre><code>server.port=5678    
 sidecar.port=3000
 sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json
-</code></pre><p><code>`` </code>server.port=5678` 指定了这个sidecar运行时所占用的端口</p>
+</code></pre><p> <code>server.port=5678</code> 指定了这个sidecar运行时所占用的端口</p>
 <p> <code>sidecar.port=3000</code> 指定了sidecar监听非jvm应用程序的端口，就是我们的php程序所挂载的服务器，之前我已经把服务器端口改成3000了</p>
 <p> <code>sidecar.health-uri=http://localhost:${sidecar.port}/phpTest/health.json</code>指定了php程序返回给sidecar的健康指标状态，我这里是通过文件的返回，当然你也可以通过RESTAPI，如果程序没有正常挂起，sidecar自然不能进行健康监测访问health.json（或者health方法），拿不到<code>up</code>，所以在注册中心则会显示一个<code>douwn</code>的状态，表示程序没有正常挂起，这就是sidecar的思想。</p>
 <p>项目结构：</p>
 <p><img src="http://i.imgur.com/Yjjg950.png" alt=""></p>
-<p>###sidecar for python</p>
-<p>创建一个为python对接的sidecar，步骤和上面创建为php的如出一辙，只是配置文件有些许的不同</p>
+<h3 id="sidecar-for-python"><a href="#sidecar-for-python" class="headerlink" title="sidecar for python"></a>sidecar for python</h3><p>创建一个为python对接的sidecar，步骤和上面创建为php的如出一辙，只是配置文件有些许的不同</p>
 <pre><code>server.port=5688
 sidecar.port=5680
 sidecar.health-uri=http://localhost:${sidecar.port}/health
 </code></pre><p>开头我们所准备的python应用占用的就是5680端口，这里拿到健康状态的监测是通过RESTAPI</p>
-<p>###运行程序</p>
-<p>只要php服务和python服务的开启在两个sidecar开启之前就好</p>
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>只要php服务和python服务的开启在两个sidecar开启之前就好</p>
 <p>JAVA程序的启动顺序为（从左到右）：</p>
 <p><img src="http://i.imgur.com/DvXPVAp.png" alt=""></p>
 <p>我们访问<code>http://localhost:8761/</code>可以看到：</p>
@@ -466,8 +367,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
 <p>我们关闭其中的一个python服务，可以看到：</p>
 <p><img src="http://i.imgur.com/iGPSWqQ.png" alt=""></p>
 <p>php和python服务已经如同springboot程序一样，关闭即down，可以在注册中心看到它的运行状态了！</p>
-<p>##总结</p>
-<p>SideCar的设计很优雅，它完全不会去入侵其他应用的代码。就像一个代理一样，它始终观察着应用的运行（它的健康状态），本质上注册到eureka的是sidecar，但是它所显示的状态却是它所监测的应用。只要php、python..等为其提供一个health监测的接口即可！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SideCar的设计很优雅，它完全不会去入侵其他应用的代码。就像一个代理一样，它始终观察着应用的运行（它的健康状态），本质上注册到eureka的是sidecar，但是它所显示的状态却是它所监测的应用。只要php、python..等为其提供一个health监测的接口即可！</p>
 <p>代码已上传至： <a href="https://github.com/KeoZmy/SpringCloudDemo.git" target="_blank" rel="external">https://github.com/KeoZmy/SpringCloudDemo.git</a></p>
 ]]></content>
     
