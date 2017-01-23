@@ -44,7 +44,7 @@
 		  <h1 class="header-author"><a href="/">KeoZhao</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">温故而知新，每次阅读都会有新的收获</p>
+		<p class="header-subtitle">温故而知新 每次阅读都会有新的收获</p>
 		
 
 		<nav class="header-menu">
@@ -103,7 +103,7 @@
 			  <h1 class="header-author js-header-author">KeoZhao</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>温故而知新，每次阅读都会有新的收获<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>温故而知新 每次阅读都会有新的收获<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -149,6 +149,117 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-k8s环境搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/23/k8s环境搭建/">Neo4j学习笔记（一）初识Neo4</a>
+    </h1>
+  
+
+        <a href="/2017/01/23/k8s环境搭建/" class="archive-article-date">
+  	<time datetime="2017-01-23T06:17:01.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-23</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</p>
+<p>kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”<br>参考链接： </p>
+<p>方案一：阿里云资源安装方法： </p>
+<p><a href="https://yq.aliyun.com/articles/66474" target="_blank" rel="external">https://yq.aliyun.com/articles/66474</a> </p>
+<p>1.19日更新 </p>
+<p><a href="https://yq.aliyun.com/articles/68921?spm=5176.100240.searchblog.7.yjlDST" target="_blank" rel="external">https://yq.aliyun.com/articles/68921?spm=5176.100240.searchblog.7.yjlDST</a> </p>
+<p>开发者平台：</p>
+<p><a href="https://dev.aliyun.com/search.html?spm=5176.1972344.0.1.awEW4a" target="_blank" rel="external">https://dev.aliyun.com/search.html?spm=5176.1972344.0.1.awEW4a</a></p>
+<p>（对于被墙的一些资源，第一反应，应该是阿里云，感谢阿里）</p>
+<p>方案二：自定义安装方法: </p>
+<p><a href="https://mritd.me/2016/10/29/set-up-kubernetes-cluster-by-kubeadm/#rpm" target="_blank" rel="external">https://mritd.me/2016/10/29/set-up-kubernetes-cluster-by-kubeadm/#rpm</a></p>
+<h2 id="kubernetes安装"><a href="#kubernetes安装" class="headerlink" title="kubernetes安装"></a>kubernetes安装</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>操作系统：Centos7 （这里我用的是最简版的，需要什么指令再装）</p>
+<p>Kubernetes 1.5.1 </p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>由于k8s的官方安装包在墙外，而centos7开启vpn的实现不稳定，所以可以通过阿里云的镜像进行下载，或者去kubernetes的GitHub，release下有所有最新的rpm包（参考方案二）。目前CentOS可以通过下面的命令安装k8s软件。 </p>
+<p>请注意安装顺序 ：</p>
+<ol>
+<li><p>安装 socat  </p>
+<p> <code>$ yum install -y socat</code></p>
+</li>
+<li><p>安装docker </p>
+<p> <code>$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</code></p>
+</li>
+<li><p>下载kubectl </p>
+<p> <code>$ curl -sSL http://k8s.oss-cn-shanghai.aliyuncs.com/kube/rpm/kubectl-1.5.1.x86_64.rpm -o kubectl-1.5.1.x86_64.rpm</code>  </p>
+</li>
+<li><p>下载kubelet  </p>
+<p> <code>$ curl -sSL http://k8s.oss-cn-shanghai.aliyuncs.com/kube/rpm/kubelet-1.5.1.x86_64.rpm -o kubelet-1.5.1.x86_64.rpm</code>  </p>
+</li>
+<li><p>下载kubernetes-cni 插件 </p>
+<p> <code>$ curl -sSL http://k8s.oss-cn-shanghai.aliyuncs.com/kube/rpm/kubernetes-cni-0.3.0.1-1.07a8a2.x86_64.rpm -o kubernetes-cni-0.3.0.1-1.07a8a2.x86_64.rpm</code>  </p>
+</li>
+<li><p>下载kubeadm  </p>
+<p> <code>$ curl -sSL http://k8s.oss-cn-shanghai.aliyuncs.com/kube/rpm/kubeadm-1.6.0-0.alpha.0.2074.a092d8e0f95f52.x86_64.rpm -o kubeadm-1.6.0-0.alpha.0.2074.a092d8e0f95f52.x86_64.rpm</code></p>
+</li>
+</ol>
+<p>7.安装 </p>
+<p>  <code>$ rpm -ivh kubectl-1.5.1.x86_64.rpm kubelet-1.5.1.x86_64.rpm kubernetes-cni-0.3.0.1-1.07a8a2.x86_64.rpm   kubeadm-1.6.0-0.alpha.0.2074.a092d8e0f95f52.x86_64.rpm</code></p>
+<p>在启动kubelet之前我们需要先修改 </p>
+<p> <code>vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf</code></p>
+<p>为kubelet添加一个额外的参数 </p>
+<p>这样kubelet就不会在启动pod的时候去墙外的k8s仓库拉取pause-amd64:3.0镜像了<br>  <code>--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0</code></p>
+<p>PS：阿里云的镜像也可能会存在失效的问题，之前我们尝试这样配置拉去但是一直卡住了，原因是pause-amd64 not found，如果遇到此种情况，你可以尝试通过别的途径获取镜像，再重新打tag，如： .</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">   images=(kube-proxy-amd64:v1.4.4 kube-discovery-amd64:1.0 kubedns-amd64:1.7 kube-scheduler-amd64:v1.4.4 kube-controller-manager-amd64:v1.4.4 kube-apiserver-amd64:v1.4.4 etcd-amd64:2.2.5 kube-dnsmasq-amd64:1.3 exechealthz-amd64:1.1 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.4.1) </div><div class="line">   for imageName in $&#123;images[@]&#125; ; </div><div class="line">   do </div><div class="line">   docker pull mritd/$imageName </div><div class="line">   docker tag mritd/$imageName gcr.io/google_containers/$imageName </div><div class="line">   docker rmi mritd/$imageName </div><div class="line">done</div></pre></td></tr></table></figure>
+<p>这里是通过dockerhub下载，通过dockerfile中转，等于说就是让docker服务器去下载，你再从dockerhub pull下来，修改标签即可。具体实现可以参考方案二。或者，你也可以在自己的电脑上，开启vpn下载，然后push到镜像仓库再在centos的机子上pull下来。</p>
+<h2 id="初始化Master"><a href="#初始化Master" class="headerlink" title="初始化Master"></a>初始化Master</h2><p>注意：如果在初识化的过程中，或者在执行kubeadm相关指令遇到问题，需要重新初始化master节点，应先Tear down，执行如下指令 </p>
+<p> ` $ kubeadm reset </p>
+<p>还有个坑，初始化以前记得一定要启动 kubelet，虽然你 systemctl status kubelet 看着他是启动失败，但是也得启动，否则卡死<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl enable kubelet </div><div class="line">systemctl start kubelet</div></pre></td></tr></table></figure></p>
+<p><strong>初始化master节点</strong>: master节点是控制组件运行的地方,包含apiserver,etcd,shecduler,controllermanager, proxy等等,这些组件都会以容器的方式由kubelet拉起.从上一步里面安装完成kubeadm及kubelet的机器中挑选一台执行如下命令: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$export KUBE_REPO_PREFIX=registry.cn-hangzhou.aliyuncs.com/google-containers \       KUBE_HYPERKUBE_IMAGE=registry.cn-hangzhou.aliyuncs.com/google-containers/hyperkube-amd64:v1.5.1 \        KUBE_DISCOVERY_IMAGE=registry.cn-hangzhou.aliyuncs.com/google-containers/kube-discovery-amd64:1.0 \ KUBE_ETCD_IMAGE=registry.cn-hangzhou.aliyuncs.com/google-containers/etcd-amd64:3.0.4 </div><div class="line">$kubeadm init --pod-network-cidr=&quot;10.24.0.0/16&quot;</div></pre></td></tr></table></figure>
+<p>因为我们使用flannel网络，所以必须指定 –pod-network-cidr=”10.24.0.0/16”</p>
+<p>kubeadm init执行完毕</p>
+<p><img src="https://cdn.mritd.me/markdown/rs2mw.jpg" alt=""></p>
+<p>记录下最后一句的指令，其中包含了的token，后续添加机器都应通过该token，eg： </p>
+<p>  <code>$kubeadm join --token=57df96.3895deafe849e62d 192.168.0.252</code></p>
+<h3 id="加入节点"><a href="#加入节点" class="headerlink" title="加入节点"></a>加入节点</h3><p>   <code>kubeadm join --token &lt;token&gt; &lt;master-ip&gt;</code><br>直接从上个步骤拿即可</p>
+<h2 id="kubernetes集群网络配置方案"><a href="#kubernetes集群网络配置方案" class="headerlink" title="kubernetes集群网络配置方案"></a>kubernetes集群网络配置方案</h2><p>在许多Node组成的kubernetes集群内，跨主机容器网络互通的kubernetes集训能够工作的前提。Kubernetes本身并不会对跨主机容器网络进行设置，这需要额外的工具来实现。一些开源的包括：flannel、Open vSwitch、Weave、Calico都能够实现跨主机 容器间网络互通。flannel、Open vSwitch比较常用，这里是对flannel的方案实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$kubectl apply -f http://k8s.oss-cn-shanghai.aliyuncs.com/kube/flannel-vxlan.yml</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$kubectl --namespace=kube-system get po  </div><div class="line">```  </div><div class="line"></div><div class="line">## kubernetes-dashboard部署</div><div class="line"></div><div class="line">先准备好相关镜像</div></pre></td></tr></table></figure>
+<p>$docker pull mritd/kubernetes-dashboard-amd64:v1.5.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>$docker tag mritd/kubernetes-dashboard-amd64:v1.5.1<br> gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">kubernetes-dashboard默认的 yaml 文件中对于 image 拉取策略的定义是 无论何时都会去拉取镜像，导致即使你 load 进去也无用，所以还得先把 yaml 搞下来然后改一下镜像拉取策略，最后再 create -f 即可。 </div><div class="line"></div><div class="line">  `wget https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml -O kubernetes-dashboard.yaml `</div><div class="line"></div><div class="line">编辑yaml改一下imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可。以及image的版本号，要修改对应好事先你已经拉取的dashboard版本我这里是修改了两个地方，一个是拉取策略，一个是将镜像版本修改成1.5.1。 </div><div class="line"></div><div class="line">![](https://cdn.mritd.me/markdown/lqvh1.jpg)</div><div class="line"></div><div class="line">编辑 yaml 改一下 imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可</div><div class="line"></div><div class="line">   `kubectl create -f kubernetes-dashboard.yaml`</div><div class="line"></div><div class="line">通过通过 describe 命令我们可以查看其暴露出的 NodePoint,然后便可访问 </div><div class="line">    `kubectl --namespace=kube-system describe svc kubernetes-dashboard `</div><div class="line"></div><div class="line">**踩坑小结**： </div><div class="line"></div><div class="line">1.对于Node机器，master每创建分发一个pod，每一个pod必须有一个pause镜像，默认策略是每次创建pod就去拉取： </div><div class="line">  `vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf `</div><div class="line"></div><div class="line"> </div><div class="line">添加参数</div></pre></td></tr></table></figure></p>
+<p>// 这样kubelet就不会在启动pod的时候去墙外的k8s仓库拉取pause-amd64:3.0镜像了<br>–pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0<br>```          </p>
+<p>或者先下载相关镜像修改tag：           </p>
+<p>pause-amd64:3.0 </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/23/k8s环境搭建/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
   
     <article id="post-谈谈NoSQL——非关系型数据库概览" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -446,12 +557,120 @@ Property： Node和Relationship都会有属性，比如USERS类型的Node有属�
 <p>我的wamp服务器www目录：</p>
 <p><img src="http://i.imgur.com/q7K3c0r.png" alt=""></p>
 <p>health.json就是非JVM应用程序提供模仿SpringBoot健康检查接口的可访问的uri. 它应该返回一个json文档类似如下:</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">by the way，我把服务器的端口改成了3000，默认的是80</div><div class="line"></div><div class="line">[如何修改wamp默认80端口](http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html)</div><div class="line"></div><div class="line"></div><div class="line">### python准备（python大神请随意）</div><div class="line"></div><div class="line">这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</div><div class="line"></div><div class="line">    import httplib</div><div class="line"></div><div class="line">	from twisted.web import server, resource</div><div class="line">	from twisted.internet import reactor, endpoints</div><div class="line"></div><div class="line">	class Health(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    	def render_GET(self, request):</div><div class="line">       	 request.setHeader(&quot;content-type&quot;, &quot;application/json&quot;)</div><div class="line">       	 return &apos;&#123;&quot;status&quot;:&quot;UP&quot;&#125;\n&apos;</div><div class="line"></div><div class="line">	class Fortune(resource.Resource):</div><div class="line">    	isLeaf = True</div><div class="line"></div><div class="line">    def render_GET(self, request):</div><div class="line">        conn = httplib.HTTPConnection(&apos;localhost&apos;, 5678)</div><div class="line">        conn.request(&quot;GET&quot;, &quot;/fortunes&quot;)</div><div class="line">        res = conn.getresponse()</div><div class="line">        fortune = res.read()</div><div class="line">        request.setHeader(&quot;content-type&quot;, &quot;text/plain&quot;)</div><div class="line">        return fortune</div><div class="line"></div><div class="line"></div><div class="line">	root = resource.Resource()</div><div class="line">	root.putChild(&apos;health&apos;, Health())	</div><div class="line">	root.putChild(&apos;&apos;, Fortune())</div><div class="line">	endpoints.serverFromString(reactor, &quot;tcp:5680&quot;).listen(server.Site(root))</div><div class="line">	reactor.run()</div><div class="line"></div><div class="line"></div><div class="line">### Eureka</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line">    </div><div class="line">  </div><div class="line">	&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">     &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;eureka&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;eureka&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;</div><div class="line"></div><div class="line">修改application.properties配置文件</div></pre></td></tr></table></figure>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">by the way，我把服务器的端口改成了3000，默认的是80</div><div class="line"></div><div class="line">[如何修改wamp默认80端口](http://jingyan.baidu.com/article/e3c78d644100e83c4c85f5d7.html)</div><div class="line"></div><div class="line"></div><div class="line">### python准备（python大神请随意）</div><div class="line"></div><div class="line">这边主要是写了一个python程序模拟web应用的运行，这个应用占用的端口为5680</div></pre></td></tr></table></figure>
 
-server.port=8761
+import httplib
+
+from twisted.web import server, resource
+from twisted.internet import reactor, endpoints
+
+class Health(resource.Resource):
+    isLeaf = True
+
+    def render_GET(self, request):
+        request.setHeader(&quot;content-type&quot;, &quot;application/json&quot;)
+        return &apos;{&quot;status&quot;:&quot;UP&quot;}\n&apos;
+
+class Fortune(resource.Resource):
+    isLeaf = True
+
+def render_GET(self, request):
+    conn = httplib.HTTPConnection(&apos;localhost&apos;, 5678)
+    conn.request(&quot;GET&quot;, &quot;/fortunes&quot;)
+    res = conn.getresponse()
+    fortune = res.read()
+    request.setHeader(&quot;content-type&quot;, &quot;text/plain&quot;)
+    return fortune
+
+
+root = resource.Resource()
+root.putChild(&apos;health&apos;, Health())    
+root.putChild(&apos;&apos;, Fortune())
+endpoints.serverFromString(reactor, &quot;tcp:5680&quot;).listen(server.Site(root))
+reactor.run()
+</code></pre> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### Eureka</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div></pre></td></tr></table></figure>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+&lt;groupId&gt;org.test&lt;/groupId&gt;
+&lt;artifactId&gt;eureka&lt;/artifactId&gt;
+&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+&lt;packaging&gt;jar&lt;/packaging&gt;
+
+&lt;name&gt;eureka&lt;/name&gt;
+&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+
+&lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.2.5.RELEASE&lt;/version&gt;
+    &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+&lt;/parent&gt;
+
+&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;java.version&gt;1.8&lt;/java.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;
+        &lt;version&gt;RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+        &lt;version&gt;RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;
+            &lt;version&gt;Angel.SR3&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+ &lt;/project&gt;
+</code></pre> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">修改application.properties配置文件</div></pre></td></tr></table></figure>
+<pre><code>server.port=8761
 eureka.client.fetch-registry=false
 eureka.client.register-with-eureka=false
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后，我们在EurekaApplication中添加注解`@EnableEurekaServer`，开启服务的注册中心</div><div class="line"></div><div class="line">![](http://i.imgur.com/h3H7XIB.png)</div><div class="line"></div><div class="line"></div><div class="line">项目目录结构如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/tWIMLjS.png)</div><div class="line"></div><div class="line">### Configserver</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line"></div><div class="line"></div><div class="line">     &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">    &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;configserver&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;configserver&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</div><div class="line">			&lt;exclusions&gt;</div><div class="line">				&lt;exclusion&gt;</div><div class="line">					&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</div><div class="line">					&lt;artifactId&gt;spring-security-rsa&lt;/artifactId&gt;</div><div class="line">				&lt;/exclusion&gt;</div><div class="line">			&lt;/exclusions&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">修改application.properties配置文件:</div></pre></td></tr></table></figure>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后，我们在EurekaApplication中添加注解`@EnableEurekaServer`，开启服务的注册中心</div><div class="line"></div><div class="line">![](http://i.imgur.com/h3H7XIB.png)</div><div class="line"></div><div class="line"></div><div class="line">项目目录结构如下：</div><div class="line"></div><div class="line">![](http://i.imgur.com/tWIMLjS.png)</div><div class="line"></div><div class="line">### Configserver</div><div class="line"></div><div class="line">创建一个springboot程序，修改pom文件如下：</div><div class="line"></div><div class="line"></div><div class="line">     &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">    &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">		 xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;org.test&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;configserver&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;configserver&lt;/name&gt;</div><div class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2.5.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</div><div class="line">			&lt;exclusions&gt;</div><div class="line">				&lt;exclusion&gt;</div><div class="line">					&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</div><div class="line">					&lt;artifactId&gt;spring-security-rsa&lt;/artifactId&gt;</div><div class="line">				&lt;/exclusion&gt;</div><div class="line">			&lt;/exclusions&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;RELEASE&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-starter-parent&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Angel.SR3&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">     &lt;/project&gt;  </div><div class="line"></div><div class="line"></div><div class="line">修改application.properties配置文件:</div></pre></td></tr></table></figure>
 <pre><code>server.port=8888
 spring.cloud.config.server.git.uri=https://github.com/spencergibb/oscon-config-repo
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这里还有一个配置文件bootstrap.properties：</div></pre></td></tr></table></figure>
@@ -672,7 +891,7 @@ sidecar.health-uri=http://localhost:${sidecar.port}/health
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 KeoZhao
+    		&copy; 2017 KeoZhao
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
