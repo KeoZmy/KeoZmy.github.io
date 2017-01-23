@@ -6,26 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://KeoZmy.github.io">
-  <title>Keo&#39;s Blog</title>
+  <title>Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建 | Keo&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
+  <meta name="description" content="kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
 方案一：阿里云资源安装方法： 
-https:">
+https://yq.aliyun.com/articles/66474 
+1.19日更新 
+https://yq.aliyun.com/articles">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Keo's Blog">
+<meta property="og:title" content="Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建">
 <meta property="og:url" content="http://KeoZmy.github.io/2017/01/23/k8s环境搭建/index.html">
 <meta property="og:site_name" content="Keo's Blog">
-<meta property="og:description" content="title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
+<meta property="og:description" content="kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
 方案一：阿里云资源安装方法： 
-https:">
+https://yq.aliyun.com/articles/66474 
+1.19日更新 
+https://yq.aliyun.com/articles">
 <meta property="og:image" content="https://cdn.mritd.me/markdown/rs2mw.jpg">
 <meta property="og:image" content="https://cdn.mritd.me/markdown/lqvh1.jpg">
-<meta property="og:updated_time" content="2017-01-23T06:31:03.956Z">
+<meta property="og:updated_time" content="2017-01-23T06:39:09.955Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keo's Blog">
-<meta name="twitter:description" content="title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
+<meta name="twitter:title" content="Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建">
+<meta name="twitter:description" content="kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”参考链接： 
 方案一：阿里云资源安装方法： 
-https:">
+https://yq.aliyun.com/articles/66474 
+1.19日更新 
+https://yq.aliyun.com/articles">
 <meta name="twitter:image" content="https://cdn.mritd.me/markdown/rs2mw.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Keo&#39;s Blog" type="application/atom+xml">
@@ -161,10 +167,22 @@ https:">
             <article id="post-k8s环境搭建" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建
+    </h1>
+  
+
+        <a href="/2017/01/23/k8s环境搭建/" class="archive-article-date">
+  	<time datetime="2017-01-23T06:17:01.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-23</time>
+</a>
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-Kubernetes（k8s）学习笔记（二）——-环境及集群搭建"><a href="#title-Kubernetes（k8s）学习笔记（二）——-环境及集群搭建" class="headerlink" title="title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建"></a>title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</h2><h1 id="Kubernetes（k8s）学习笔记（二）——-环境及集群搭建"><a href="#Kubernetes（k8s）学习笔记（二）——-环境及集群搭建" class="headerlink" title="Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建"></a>Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</h1><p>kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”<br>参考链接： </p>
+        <p>kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”<br>参考链接： </p>
 <p>方案一：阿里云资源安装方法： </p>
 <p><a href="https://yq.aliyun.com/articles/66474" target="_blank" rel="external">https://yq.aliyun.com/articles/66474</a> </p>
 <p>1.19日更新 </p>
