@@ -153,23 +153,10 @@
     <article id="post-k8s环境搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/23/k8s环境搭建/">Neo4j学习笔记（一）初识Neo4</a>
-    </h1>
-  
-
-        <a href="/2017/01/23/k8s环境搭建/" class="archive-article-date">
-  	<time datetime="2017-01-23T06:17:01.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-23</time>
-</a>
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</p>
-<p>kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”<br>参考链接： </p>
+        <hr>
+<h2 id="title-Kubernetes（k8s）学习笔记（二）——-环境及集群搭建"><a href="#title-Kubernetes（k8s）学习笔记（二）——-环境及集群搭建" class="headerlink" title="title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建"></a>title:Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</h2><h1 id="Kubernetes（k8s）学习笔记（二）——-环境及集群搭建"><a href="#Kubernetes（k8s）学习笔记（二）——-环境及集群搭建" class="headerlink" title="Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建"></a>Kubernetes（k8s）学习笔记（二）—— 环境及集群搭建</h1><p>kubernetes基础软件的安装，基本上可以跳过谷歌官网的教程。因为谷歌国内被墙了，毕竟生产环境不是虚拟机，在一台centos7的机器上开启vpn，这并不是一个好的解决方案，但是可以尝试“曲线救国”<br>参考链接： </p>
 <p>方案一：阿里云资源安装方法： </p>
 <p><a href="https://yq.aliyun.com/articles/66474" target="_blank" rel="external">https://yq.aliyun.com/articles/66474</a> </p>
 <p>1.19日更新 </p>
@@ -224,12 +211,25 @@
 <p>  <code>$kubeadm join --token=57df96.3895deafe849e62d 192.168.0.252</code></p>
 <h3 id="加入节点"><a href="#加入节点" class="headerlink" title="加入节点"></a>加入节点</h3><p>   <code>kubeadm join --token &lt;token&gt; &lt;master-ip&gt;</code><br>直接从上个步骤拿即可</p>
 <h2 id="kubernetes集群网络配置方案"><a href="#kubernetes集群网络配置方案" class="headerlink" title="kubernetes集群网络配置方案"></a>kubernetes集群网络配置方案</h2><p>在许多Node组成的kubernetes集群内，跨主机容器网络互通的kubernetes集训能够工作的前提。Kubernetes本身并不会对跨主机容器网络进行设置，这需要额外的工具来实现。一些开源的包括：flannel、Open vSwitch、Weave、Calico都能够实现跨主机 容器间网络互通。flannel、Open vSwitch比较常用，这里是对flannel的方案实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$kubectl apply -f http://k8s.oss-cn-shanghai.aliyuncs.com/kube/flannel-vxlan.yml</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$kubectl --namespace=kube-system get po  </div><div class="line">```  </div><div class="line"></div><div class="line">## kubernetes-dashboard部署</div><div class="line"></div><div class="line">先准备好相关镜像</div></pre></td></tr></table></figure>
-<p>$docker pull mritd/kubernetes-dashboard-amd64:v1.5.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
-<p>$docker tag mritd/kubernetes-dashboard-amd64:v1.5.1<br> gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">kubernetes-dashboard默认的 yaml 文件中对于 image 拉取策略的定义是 无论何时都会去拉取镜像，导致即使你 load 进去也无用，所以还得先把 yaml 搞下来然后改一下镜像拉取策略，最后再 create -f 即可。 </div><div class="line"></div><div class="line">  `wget https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml -O kubernetes-dashboard.yaml `</div><div class="line"></div><div class="line">编辑yaml改一下imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可。以及image的版本号，要修改对应好事先你已经拉取的dashboard版本我这里是修改了两个地方，一个是拉取策略，一个是将镜像版本修改成1.5.1。 </div><div class="line"></div><div class="line">![](https://cdn.mritd.me/markdown/lqvh1.jpg)</div><div class="line"></div><div class="line">编辑 yaml 改一下 imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可</div><div class="line"></div><div class="line">   `kubectl create -f kubernetes-dashboard.yaml`</div><div class="line"></div><div class="line">通过通过 describe 命令我们可以查看其暴露出的 NodePoint,然后便可访问 </div><div class="line">    `kubectl --namespace=kube-system describe svc kubernetes-dashboard `</div><div class="line"></div><div class="line">**踩坑小结**： </div><div class="line"></div><div class="line">1.对于Node机器，master每创建分发一个pod，每一个pod必须有一个pause镜像，默认策略是每次创建pod就去拉取： </div><div class="line">  `vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf `</div><div class="line"></div><div class="line"> </div><div class="line">添加参数</div></pre></td></tr></table></figure></p>
-<p>// 这样kubelet就不会在启动pod的时候去墙外的k8s仓库拉取pause-amd64:3.0镜像了<br>–pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0<br>```          </p>
-<p>或者先下载相关镜像修改tag：           </p>
+<pre><code>$kubectl apply -f http://k8s.oss-cn-shanghai.aliyuncs.com/kube/flannel-vxlan.yml 
+$kubectl --namespace=kube-system get po    
+</code></pre><h2 id="kubernetes-dashboard部署"><a href="#kubernetes-dashboard部署" class="headerlink" title="kubernetes-dashboard部署"></a>kubernetes-dashboard部署</h2><p>先准备好相关镜像 </p>
+<pre><code>$docker pull mritd/kubernetes-dashboard-amd64:v1.5.1 
+$docker tag mritd/kubernetes-dashboard-amd64:v1.5.1 
+</code></pre><p> gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.1  </p>
+<p>kubernetes-dashboard默认的 yaml 文件中对于 image 拉取策略的定义是 无论何时都会去拉取镜像，导致即使你 load 进去也无用，所以还得先把 yaml 搞下来然后改一下镜像拉取策略，最后再 create -f 即可。 </p>
+<p>  <code>wget https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml -O kubernetes-dashboard.yaml</code></p>
+<p>编辑yaml改一下imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可。以及image的版本号，要修改对应好事先你已经拉取的dashboard版本我这里是修改了两个地方，一个是拉取策略，一个是将镜像版本修改成1.5.1。 </p>
+<p><img src="https://cdn.mritd.me/markdown/lqvh1.jpg" alt=""></p>
+<p>编辑 yaml 改一下 imagePullPolicy，把 Always 改成 IfNotPresent(本地没有再去拉取) 或者 Never(从不去拉取) 即可</p>
+<p>   <code>kubectl create -f kubernetes-dashboard.yaml</code></p>
+<p>通过通过 describe 命令我们可以查看其暴露出的 NodePoint,然后便可访问<br>    <code>kubectl --namespace=kube-system describe svc kubernetes-dashboard</code></p>
+<p><strong>踩坑小结</strong>： </p>
+<p>1.对于Node机器，master每创建分发一个pod，每一个pod必须有一个pause镜像，默认策略是每次创建pod就去拉取：<br>  <code>vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf</code></p>
+<p>添加参数 </p>
+<pre><code>// 这样kubelet就不会在启动pod的时候去墙外的k8s仓库拉取pause-amd64:3.0镜像了 
+--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
+</code></pre><p>或者先下载相关镜像修改tag：           </p>
 <p>pause-amd64:3.0 </p>
 
       
